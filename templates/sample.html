@@ -1,0 +1,90 @@
+<select id="list1" name ="list1" onchange="updateList('list2', this);" style="width: 300px;"></select>
+<select id="list2" name ="list2" onchange="updateList('list3', this);" style="width: 300px;"></select>
+<select id="list3" name ="list3" style="width: 300px;"></select>
+
+
+<script>
+    let data = [
+{"id":1,"name":"USA","parentid":0},
+{"id":2,"name":"Japan","parentid":0},
+{"id":3,"name":"Europe","parentid":0},
+{"id":4,"name":"California","parentid":1},
+{"id":5,"name":"Oklahoma","parentid":1},
+{"id":6,"name":"Arizona","parentid":1},
+{"id":7,"name":"Kantô","parentid":2},
+{"id":8,"name":"Kansai","parentid":2},
+{"id":9,"name":"Chügoku","parentid":2},
+{"id":10,"name":"France","parentid":3},
+{"id":11,"name":"Deutschland","parentid":3},
+{"id":12,"name":"Espana","parentid":3},
+{"id":13,"name":"Sacramento","parentid":4},
+{"id":14,"name":"Los Angeles","parentid":4},
+{"id":15,"name":"San Diego","parentid":4},
+{"id":16,"name":"Tulsa","parentid":5},
+{"id":17,"name":"Oklahoma City","parentid":5},
+{"id":18,"name":"Lawton","parentid":5},
+{"id":19,"name":"Phoenix","parentid":6},
+{"id":20,"name":"Flagstaff","parentid":6},
+{"id":21,"name":"Tucson","parentid":6},
+{"id":21,"name":"Tokyo","parentid":7},
+{"id":22,"name":"Chiba","parentid":7},
+{"id":23,"name":"Tochigi","parentid":7},
+{"id":24,"name":"Kyoto","parentid":8},
+{"id":25,"name":"Osaka","parentid":8},
+{"id":26,"name":"Nara","parentid":8},
+{"id":27,"name":"Tottori","parentid":9},
+{"id":28,"name":"Hirochima","parentid":9},
+{"id":29,"name":"Okayama","parentid":9},
+{"id":30,"name":"Quimper","parentid":10},
+{"id":31,"name":"Toulouse","parentid":10},
+{"id":32,"name":"Nancy","parentid":10},
+{"id":33,"name":"Dusseldorf","parentid":11},
+{"id":34,"name":"Leipzig","parentid":11},
+{"id":35,"name":"Munchen","parentid":11},
+{"id":36,"name":"Barcelona","parentid":12},
+{"id":37,"name":"Sevilla","parentid":12},
+{"id":38,"name":"Guernica","parentid":12}]
+
+function populateList(list, pid) {
+  let l = document.getElementById(list);
+  l.innerHTML = "";
+  let topItem = document.createElement("option");
+  topItem.value = 0;
+  topItem.text = "--Select--";
+  l.appendChild(topItem); 
+  let items = data.filter(item => item.parentid == pid);
+  items.forEach(function(item){
+    let newItem = document.createElement("option");
+    newItem.value = item.id;
+    newItem.text = item.name;
+    l.appendChild(newItem);
+  })
+}
+
+function updateList(selList, thisList) {
+  if (thisList.value != 0) {
+    populateList(selList, Number(thisList.value));
+  } else {
+    let s = document.getElementById(selList);
+    s.value = 0;
+    triggerEvent(s, "onchange");
+    let sCopy = s.cloneNode(false);
+    let p = s.parentNode;
+    p.replaceChild(sCopy, s);
+  }
+}
+function triggerEvent(e, trigger)
+{
+    if ((e[trigger] || false) && typeof e[trigger] == 'function')
+    {
+        e[trigger](e);
+    }
+}
+ 
+
+function loadList1() {
+  populateList("list1", 0);
+}
+
+window.onload = loadList1;
+</script>

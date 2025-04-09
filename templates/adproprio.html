@@ -1,0 +1,162 @@
+{% extends 'maquette.html'%}
+{% block contenu %}
+{%load static%}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+    <!--<body background="/static/images/hero-bg.jpg";>-->
+        
+    <form method="post">
+
+        {% csrf_token %}
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Création de propiétaire:</h5><br>           
+
+        <div class="bloc_champs">
+            <!--1-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  >    
+                        
+                        <div>
+                            <label>Genre:</label><br>
+                            <select  name="genre" class="form-inline" >
+                                <option selected>-------------</option>
+                                <option>Monsieur</option>
+                                <option>Madame</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+
+                        <div ><br>
+                            <label>Nom et prenoms:</label><br>
+                            <input name="nom" class="form-control" />
+                        </div>
+
+                        
+                        <div><br>
+                            <label>Date Naissance:</label><br>
+                            <input name="datenais" type="date" class="form-control"/>
+                        </div>
+                        
+                        <div><br>
+                            <label>Lieu Naissance:</label><br>
+                            <input name="lieunaissance" class="form-control"/>
+                        </div>
+    
+
+                        <div><br>
+                            <label>Type pièce:</label><br>
+                        <select  name="naturepiece" class="form-inline">
+                            <option selected>-------------</option>
+                            <option>CNI</option>
+                            <option>Passeport</option>
+                            <option>Permis de conduire</option>
+                            <option>Carte de sejours</option>
+                        </select>
+                        </div>
+    
+                        <div><br>
+                            <label>N° Pièce:</label><br>
+                            <input name="numpiece" class="form-control"/>
+                        </div>
+                        
+                        <div><br>
+                            <label>Date validité pièce:</label><br>
+                            <input name="datevalidepiece" type="date" class="form-control"/>
+                        </div>
+    
+                        <div><br>
+                            <label>Contact 1:</label><br>
+                            <input name="contact1" type="tel" class="form-control"/>
+                        </div>
+    
+                        <div><br>
+                            <label>Contact 2:</label><br>
+                            <input name="contact2" type="tel" class="form-control"/>
+                        </div>
+
+                        
+                        <div><br>
+                            <label>Adresse Mail:</label><br>
+                            <input name="adressemail" type="email" class="form-control" />
+                        </div>
+
+                        <div><br>
+                            <label>Boite Postale:</label><br>
+                            <input name="boitepostale" class="form-control"/>
+                        </div>
+                        
+                    </div>
+            </div>
+
+            <!--2-->
+            <div class="c2" >
+                <div class="divinfosup">
+                    <div>
+                        <label>Situation Matrimoniale:</label><br>
+                        <select  name="situationmatrimoniale" class="form-inline">
+                            <option selected>-------------</option>
+                            <option>Célibataire</option>
+                            <option>Marié(e)</option>
+                            <option>Divorcé(e)</option>
+                            <option>Veuf(ve)</option>
+                        </select>
+                    </div>
+
+                    
+                    <div><br>
+                        <label>Fonction:</label><br>
+                        <input name="fonctions" class="form-control"/>
+                    </div>
+
+                    <div><br>
+                        <label>Lieu Habitation:</label><br>
+                        <input name="lieuhabitation" type="" class="form-control"/>
+                    </div>
+                    
+                
+                    <div><br>
+                        <label>Nationnalité:</label><br>
+                        <input name="nationnalite" class="form-control"/>
+                    </div>
+                
+                    
+                    <div><br>
+                        <label>N° Compte:</label><br>
+                        <input name="numcompte" class="form-control"/>
+                    </div>
+
+                    <div><br>
+                        <label>Personne Urgence:</label><br>
+                        <input name="personneurgence" class="form-control"/>
+                    </div>
+                
+                    <div><br>
+                        <label>Contact Urgence:</label><br>
+                        <input name="contacturgence" type="tel" class="form-control" />
+                    </div>
+
+                    <div><br>
+                        <label>Representant:</label><br>
+                        <input name="representant" class="form-control"/>
+                    </div>
+                
+                    <div><br>
+                        <label>Contact Representant:</label><br>
+                        <input name="contact1representant" type="tel" class="form-control"/>
+                    </div>
+
+                    <div ><br>
+                        <label>Photo:</label><br>
+                        <input name="photo" type="file" class="form-control" />
+                    </div><br>
+                
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+

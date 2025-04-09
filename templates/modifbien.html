@@ -1,0 +1,166 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="post">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Modification de bien:</h5><br>           
+
+        <div class="bloc_champs">
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  >  
+                        
+                        <div>
+                            <label >Type:</label><br>
+                            <select class="selectfield" name="typebien"> 
+                                <option >Basse cours</option>
+                                <option >Immeuble</option>
+                                <option >Parking</option>
+                                <option >Terrain</option>
+                                <option >Autre</option>
+
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Proprietaire:</label><br><br>
+                            <select class="selectfield" name="proprietaire"  >
+                                <option value="{{lebien.proprietaire_id}}" >{{lebien.proprietaire.nom}}</option>
+                                {% for proprio in listeproprio %}
+                                <!--Recuperatrion des proprietaires sans le propriotaore du site car il a été deja inseré dans la zone de selection par la premiere option-->
+                                    {% if proprio.id != lebien.proprietaire_id %}
+                                        <option value="{{proprio.id}}" >{{proprio.nom}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                         </div>
+                        
+                        <div><br>
+                            <label>Nom du bien:</label><br><input name="nom" class="form-control" value="{{lebien.nom}}" />
+                        </div>
+    
+                        <div><br>
+                            <label>Localisation:</label><br><input name="localisation" class="form-control" value="{{lebien.localisation}}"/>
+                        </div>
+
+                        <div><br>
+                            <label>Titre propriété:</label><br><input name="titreproprite" class="form-control" value="{{lebien.titreproprite}}"/>
+                        </div>
+
+                        <div><br>
+                            <label>N° titre propriété:</label><br><input name="numtitreproprite" class="form-control" value="{{lebien.numtitreproprite}}"/>
+                        </div>
+
+
+                        <div><br>
+                            <label>Circonscription:</label><br><input name="circonscription" class="form-control" value="{{lebien.circonscription}}"/>
+                        </div>
+                    
+                        <div><br>
+                            <label>Commune:</label><br><input name="commune" class="form-control" value="{{lebien.commune}}"/>
+                        </div>
+                    
+                        <div><br>
+                            <label>Quartier:</label><br><input name="quartier" type="text" class="form-control" value="{{lebien.quartier}}"/>
+                        </div>
+                    
+                        <div><br>
+                            <label>ilot:</label><br><input name="ilot" type="number" class="form-control" value="{{lebien.iLot}}"/>
+                        </div>
+                    
+                        <div><br>
+                            <label>Lot:</label><br><input name="lot" type="number" class="form-control" value="{{lebien.lot}}"/>
+                        </div>
+                    
+                        <div><br>
+                            <label>Superficie:</label><br><input name="superficie" type="number" class="form-control" value="{{lebien.superficie}}"/>
+                        </div>
+
+                        <div><br>
+                            <label>Usage:</label><br><input name="usage" type="text" class="form-control" value="{{lebien.usage}}"/>
+                        </div>
+    
+
+                        
+                    </div><br>
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+            <!--Bloc 2 des details proprietaire-->
+            <div class="c2">
+                <div class="divinfosup">
+
+                    <div>
+                        <label>Avance:</label><br><input name="loyeravance" type="number" class="form-control" value="{{lebien.loyeravance}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Caution:</label><br><input name="caution" type="number" class="form-control" value="{{lebien.caution}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Caution CIE:</label><br><input name="cautioncie" type="number" class="form-control" value="{{lebien.cautioncie}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Frais Agence:</label><br><input name="fraisagence" type="number" class="form-control" value="{{lebien.fraisagence}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Enregistrement Bail:</label><br><input name="enregistrementbail" type="number" class="form-control" value="{{lebien.enregistrementbail}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Assurance:</label><br><input name="assurance" type="number" class="form-control" value="{{lebien.assurance}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Revenu mensuel:</label><br><input name="revenumensuel" type="number" class="form-control" value="{{lebien.revenumensuel}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Frais renouvellement:</label><br><input name="fraisrenouvellement" type="number" class="form-control" value="{{lebien.fraisrenouvellement}}"/>
+                    </div>
+
+                    <div><br>
+                        <label>Legislation bail:</label><br><input name="legislationbau" type="number" class="form-control" value="{{lebien.legislationbau}}"/>
+                    </div>
+                    
+
+                    <div><br>
+                        <label>Delais paiement:</label><br><input name="delaispaiement" type="number" class="form-control" value="{{lebien.delaispaiement}}"/>
+                    </div>
+                
+                    <div><br>
+                        <label>Docs  :<a href="{{lebien.docs.url}}">{{lebien.docs}}</a><br>
+                        </label><br><input name="docs" type="file" class="form-control" placeholder="{{lebien.docs}}"/>
+                    </div>
+
+                    
+                    <div><br>
+                        <label>Commentaire:</label><br><textarea class="texarea" name="commentaire" type="text" placeholder="Commentaire" style="width: 95%;" class="form-control" value="{{lebien.commentaire}}">{{lebien.commentaire}}</textarea>
+                    </div>
+
+
+                    <div><br>
+                        <label>Statut:</label><br>
+                        <select class="selectfield" name="statut" value="{{status.libelle}}">
+                            {% for status in listestatus %}
+                            <option value="{{status.libelle}}">{{status.libelle}}</option>
+                            {% endfor %}
+                        </select>
+                     </div>
+
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+        </form>
+
+        {% endblock %}
+
+

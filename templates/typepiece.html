@@ -1,0 +1,29 @@
+{% load static%}
+
+{% block content %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/conex.css'%}" />
+<div class="wrapper">
+    
+
+    <div class="logo">
+        <img src="/static/images/logoconnex.png" alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        <!--Twitter-->
+    </div>
+
+    <form class="p-3 mt-3" method="POST" action="">
+
+        {% csrf_token %}
+
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="text" name="nom" id="nom" placeholder="Nom complet">
+        </div>
+
+       
+        <button type="submit"  class="btn mt-3">Valider</button>
+
+    </form>
+</div>
+{% endblock%}

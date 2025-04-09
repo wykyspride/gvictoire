@@ -1,0 +1,176 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="POST">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';"> Details de la facture:</h5><br>           
+
+        <div class="bloc_champs">
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    
+                    <div><br>
+                        <label>Statut:</label><br>
+                        <select class="selectfield" name="statut" value="{{status.id}}">
+                            {% for status in listestatus %}
+                            <option value="{{status.id}}">{{status.libelle}}</option>
+                            {% endfor %}
+                        </select>
+                     </div>
+
+                    <div class="divchampsperso"  > 
+                        <div>
+                            <label>Client:</label><br>
+                            <input name="client" type="text" class="form-control"  value="{{ laproforma.proprietaire.nom }}" style="text-align: right;"/>
+                        </div><br>
+
+                        <div>
+                            <label>Localisation :</label><br><input name="localisation" type="text" class="form-control"  style="text-align: right ;"/>
+                        </div><br><br>
+
+                        <div>
+                            <label>Reference :</label><br><input name="reference" type="text" class="form-control"  style="text-align: right;"/>
+                        </div><br><br>
+                           
+                        <div>
+                            <label>N° Quittance:</label><br><input  name="numquitance" type="text" class="form-control" value="{{ laproforma.numquitance }}" style="text-align: right;"/>
+                        </div><br>
+                     
+                        <div>
+                            <label>Date création :</label><br><input name="datecreation" type="date" class="form-control" style="text-align: right;"/>
+                        </div><br>
+
+                     
+                        <div>
+                            <label>Delais paiement :</label><br><input name="delaispaiement" type="date" class="form-control" style="text-align: right;"/>
+                        </div><br>
+                        
+                        <div>
+                            <label>Bien :</label><br><input name="bien" type="text" class="form-control" value="{{ laproforma.bien.nom }}" style="text-align: right;"/>
+                        </div><br>
+                            
+                                
+                        <div>
+                            <label>Type contrat :</label><br><input name="bien" type="text" class="form-control" value="{{ laproforma.usage }}" style="text-align: right;"/>
+                        </div><br>
+
+                            
+                        <div>
+                            <label>Commercial :</label><br><input name="commercial" type="text" class="form-control" value="{{ laproforma.personnel.nom }}" style="text-align: right;"/>
+                        </div><br><br>
+               
+
+                        <table class="table" id="table_details" >
+                            <tr style="background-color: #dcd8d8;">
+                                <th ><B>N°</B></th>
+                                <th ><B>Description</B></th>
+                                <th ><B>Montant HT</B></th>
+                                <th ><B>Montant TVA</B></th>
+                                <th ><B>Montant TTC</B></th>
+                                <th ><B>Remise</B></th>
+                                <th ><B>Net à Payer</B></th>
+                                <th ></th>
+
+                            </tr>
+                            
+                            <tbody id="table_body">
+                            </tbody>
+                            {% for lp in lesdetails %}
+                        <tr>
+                                <th scope="row"><B>{{lp.id}}</B></th>
+                                <td >{{lp.prestations.description}}</td>
+                                <td >{{lp.soustotal}}</td>
+                                <td >{{lp.totaltva}}</td>
+                                <td >{{lp.totalttc}}</td>
+                                <td >{{lp.remise}}</td>
+                                <td >{{lp.netapayer}}</td>
+
+                                
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+            <!--Bloc 2 des details devis-->
+            <div class="c2" align="right">
+                <div class="divinfosup" style="width: 40%; " align="left" >
+                    <div >
+                        <label >Sous Total :</label><input name="p_soustotal" class="form-control" type="number" id="soustotal" style="text-align: right;" placeholder="{{laproforma.soustotal}}" value="{{ laproforma.soustotal }}" />
+                    </div>
+
+                    <div>
+                        <label>Total TVA:</label><input name="p_totaltva" type="number" class="form-control" id="totaltva" placeholder="{{laproforma.totaltva}}" style="text-align: right;" value="{{ laproforma.totaltva }}" />
+                    </div>
+
+                    <div>
+                        <label>Total TTC:</label><input name="p_totalttc" class="form-control" type="number" id="totalttc" placeholder="{{laproforma.totalttc}}" style="text-align: right;" value="{{ laproforma.totalttc }}" />
+                    </div>
+
+                    <div>
+                        <label>Remise:</label><input name="p_remise" type="number" class="form-control" id="remise" placeholder="{{laproforma.remise}}" style="text-align: right;" value="{{ laproforma.remise }}" />
+                    </div>
+
+                    <div>
+                        <label>Net à payer:</label><input name="p_netapayer" type="number" class="form-control" id="netapayer" placeholder="{{laproforma.netapayer}}" style="text-align: right;" value="{{ laproforma.netapayer }}" />
+                    </div>
+
+                    
+                   
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-primary" type="submit" style="background-color: rgb(17, 59, 59);">Valider</button></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+
+
+    <script >
+
+/*RECUPERATION DES BIENS DEPUIS API*/
+function viderchamps(){
+    document.getElementById('idpres').options.length=1;
+}
+
+    
+     function insererChamps() {
+        var cell, ligne;
+        idpres=document.getElementById('idpres').value;
+         /*Recuperation de l'api des données*/
+         pres=fetch("http://127.0.0.1:8000/apiprestation").then((response) => {
+         return response.json();}).then((prestations) => {
+         for ( const pres of prestations) {
+             /*Expression de la condition necessaire pour afficher les données dans les champs*/
+             if (pres.id==idpres) {
+                document.getElementById("id_mht").value=pres.montant;
+                document.getElementById("id_mttc").value=pres.montant;
+                document.getElementById("id_mtva").value=0;
+                document.getElementById("id_rm").value=0;
+                document.getElementById("id_np").value=pres.montant;
+                }
+                }
+        });
+    }
+
+
+    
+    function calcultoto(){
+        var mht= parseInt ( document.getElementById("id_mht").value);
+        var mtva= parseInt ( document.getElementById("id_mtva").value);
+        var mttc= parseInt ( document.getElementById("id_mttc").value);
+        var rm=parseInt ( document.getElementById("id_rm").value);
+        var np= parseInt ( document.getElementById("id_np").value);
+        mttc=mht+mtva
+        np=mttc-rm
+        document.getElementById("id_np").value=np;
+        document.getElementById("id_mttc").value=mttc;
+
+    }
+
+
+    </script>
+    </form>
+{% endblock %}

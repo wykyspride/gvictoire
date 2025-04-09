@@ -1,0 +1,142 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="POST">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Reglement de facture Mandat:</h5><br>           
+
+        <div class="bloc_champs" >
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+                    <h5 style="margin-left: 2%; color: #ffffff; font-family:'Trebuchet MS'; background-color: grey;">Details de la facture:</h5><br>           
+
+                    <div class="divchampsperso"  > 
+                        
+                        <div>
+                            <label>Client:</label><br>
+                            <input readonly name="client" type="text" class="form-control" placeholder="{{lafacture.proprietaire.nom}}"  value="{{lafacture.proprietaire.nom}}"/>
+
+                        </div><br>
+
+
+                    <div>
+                        <label>Bien:</label><br><input readonly name="bien" type="text" class="form-control"  placeholder="{{ lafacture.bien.nom }}" value="{{ lafacture.bien.nom }}" />
+                    </div><br>
+
+
+                           
+                    <div>
+                        <label>N° Quittance:</label><br><input readonly  name="numquitance" type="text" class="form-control" value="{{ lafacture.proforma.numquitance }}" placeholder="{{ lafacture.proforma.numquitance }}"/>
+                    </div><br>
+
+                    
+                    <div>
+                        <label>Date Facture :</label><br><input readonly name="datefacture" type="datetime" class="form-control" value="{{ lafacture.datefacture }}" />
+                    </div><br>
+
+                     
+                    <div>
+                        <label>Delais Edition :</label><br><input readonly name="dateedition" type="datetime" class="form-control" value="{{ lafacture.dateedition }}"/>
+                    </div><br>
+                  
+                                               
+                        
+                    <div>
+                        <label>Usage:</label><br><input readonly name="usage" type="text" class="form-control" placeholder="{{ lafacture.proforma.usage }}" value="{{ lafacture.proforma.usage }}" />
+                    </div><br>
+
+                       
+                    <div>
+                        <label>Commercial:</label><br><input readonly name="commercial" type="text" class="form-control" placeholder="{{ lafacture.proforma.personnel.nom }}" value="{{ lafacture.proforma.personnel.nom }}" />
+                    </div><br>
+                     
+                        
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+                   
+                </div><br>
+                <div class="c2">
+                    <div class="divchampsperso"  > 
+
+                    <h5 style="margin-left: 2%; color: #ffffff; font-family:'Trebuchet MS'; background-color: grey;">Details Reglements:</h5><br>           
+
+                    <div>
+                        <label>Statut Reglement:</label><br>
+                        <select class="selectfield" name="statut" value="{{status.id}}">
+                            {% for status in listestatus %}
+                            <option value="{{status.id}}">{{status.libelle}}</option>
+                            {% endfor %}
+                        </select>
+                     </div><br>
+
+                     <div>
+                        <label>Mode Reglement:</label><br>
+                        <select class="selectfield" name="modereglement" value="{{mode.id}}">
+                            {% for mode in listemode %}
+                            <option value="{{mode.id}}">{{mode.libelle}}</option>
+                            {% endfor %}
+                        </select>
+                     </div><br>
+
+                      
+                    <div>
+                        <label>Date Reglement :</label><br><input name="datereglement" type="date" class="form-control" />
+                    </div><br>
+
+
+                    <div>
+                        <label>Total Facture :</label><br><B><input readonly id="netapayer" name="netapayer" type="number" class="form-control" placeholder="{{ lafacture.totalttc}}" value="{{ lafacture.totalttc }}"/></B>
+                    
+                    </div><br>
+
+                    <div>
+                        <label>Total des Precedents Reglements :</label><br><input readonly id="totalreglement" name="totalreglement" type="number" class="form-control" placeholder="{{ lafacture.montantregle}}" />
+                    </div><br>
+
+                    <div>
+                        <label>Reglement Actuel :</label><br><input id="paiementactuel" name="paiementactuel" type="number" class="form-control" oninput="calculsolde()"/>
+                    
+                    </div><br>
+
+                    <div>
+                        <label>Total des Reglements Actuels :</label><br><input readonly id="totalreglementactuel" name="totalreglementactuel" type="number" class="form-control" placeholder="{{ lafacture.montantregle}}" />
+                    </div><br>
+
+                    <div> 
+                        <label>Solde :</label><br><B><input readonly id="solde" name="solde" type="number" class="form-control" placeholder="{{ lafacture.restapayer}}" /></B>
+                    </div><br>
+
+                    <div>
+                        <label>Commentaire:</label><br><textarea class="texarea" name="commentaire" type="text" placeholder="Commentaire" style="width: 95%;" class="form-control" value="{{lebien.commentaire}}">{{lebien.commentaire}}</textarea>
+                    </div>
+                
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div><br>
+                </div>
+                </div>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+
+
+            <script>
+                /*CALCUL DES SOLDES*/
+                function calculsolde() {
+                    var ttc=document.getElementById('netapayer').value;
+                    var tp=document.getElementById('totalreglement').value;
+                    var paiementactuel=document.getElementById('paiementactuel').value;
+                    var tpa;
+                    var solde;
+                    tpa=tp+paiementactuel;
+                    solde=(ttc-tpa);
+                    document.getElementById('solde').value=solde;
+                    document.getElementById('totalreglementactuel').value=tpa;
+
+                }
+
+
+            </script>
+    </form>
+{% endblock %}

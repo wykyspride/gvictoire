@@ -1,0 +1,87 @@
+
+{% extends 'maquette.html' %}
+{%block contenu%}
+
+<!--AFFICHER BIENS DANS UN TABLEAU-->
+<h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Espace clients:</h5>              
+
+  <div class="tableinfo" >
+    <table class="table"  >
+        
+      <tr style="background-color: #f1f1f1;">
+        <th><B >N°</B></th>
+        <th><B>Date Creation</B></th>
+        <th><B>Nom</B></th>
+        <th><B>Contact</B></th>
+        <th><B>Adresse Mail</B></th>
+        <th ><B>Urgence</B></th>
+        <th ><B>Contact Urgence</B></th>
+        <th ></th>
+        <th ></th>
+        <th ><B>Actions</B></th>
+        <th ></th>
+        <th ></th>
+        <th ></th>
+  </tr>
+
+
+    {% for client in lesclients %}
+    <tr>
+            <th scope="row" >{{client.id}}</th>
+            <td>{{client.datecreation}}</td>
+            <td>{{client.nom}}</td>
+            <th>{{client.contact1}}</th>
+            <th>{{client.adressemail}}</th>
+            <td>{{client.personnecasurgent}}</td>
+            <td>{{client.contacturgence}}</td>
+            <td><img src="{{client.photoloca.url}}", width=20 height=20></img></td>
+            
+        <!--Boutton voir details-->
+            <td >  
+              <a href="#" title="Voir les details du client">
+                <svg id="i-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" >
+                <circle cx="17" cy="15" r="1" />
+                <circle cx="16" cy="16" r="6" />
+                <path d="M2 16 C2 16 7 6 16 6 25 6 30 16 30 16 30 16 25 26 16 26 7 26 2 16 2 16 Z" />
+                </svg>
+              </a>
+            </td>
+
+            <td>
+              <a href="/modifclient/{{client.id}}"  title="Modifier">
+                <svg id="i-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+                </svg>
+                </a>
+            </td>
+
+            
+            <td>
+              <a href="adproformabail/{{client.id}}"  title="Editer une proforma">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+              <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+              <path d="M13.5 9a.5.5 0 0 1 .5.5V11h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V12h-1.5a.5.5 0 0 1 0-1H13V9.5a.5.5 0 0 1 .5-.5"/>
+              </svg>
+              </a>
+            </td>
+
+
+            <td>
+              <a href="#"  title="Afficher les contrats">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-folder2" viewBox="0 0 16 16">
+                <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5z"/>
+              </svg>
+              </a>
+          </td>
+     
+            <td  title="Supprimer ce client">
+              <a href="#" ><svg id="i-trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  >
+              <path d="M28 6 L6 6 8 30 24 30 26 6 4 6 M16 12 L16 24 M21 12 L20 24 M11 12 L12 24 M12 6 L13 2 19 2 20 6" />
+              </svg></a>
+            </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+{%endblock%}

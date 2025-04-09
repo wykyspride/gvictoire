@@ -1,0 +1,349 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="POST">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Création de proforma Mandat:</h5><br>           
+
+        <div class="bloc_champs" style="background-color: #f3f3f3">
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  > 
+
+                        <div>
+                            <label>Client:</label><br>
+                            <input name="client" type="text" class="form-control"  value="{{leproprio.nom}}"/>
+
+                        </div><br>
+
+                           
+                    <div>
+                        <label>N° Quittance:</label><br><input  name="numquitance" type="text" class="form-control"/>
+                    </div><br>
+
+                     
+                    <div>
+                        <label>Delais paiement :</label><br><input name="delaispaiement" type="date" class="form-control"/>
+                    </div><br>
+                        
+                       
+                        <div>
+                            <label>Biens:</label><br>
+                            <select  name="bien" class="form-inline" id="lesbiens" >
+                                <option >---------------</option>
+                                {% for bien in lesbiens %}
+                                <option value="{{bien.id}}">{{bien.nom}}</option>
+                                {%endfor%}
+                            </select>
+                        </div><br>
+                       
+                        
+                                               
+                        <div>
+                            <label>Type contrat:</label><br>
+                            <select  name="typebail" class="form-inline" >
+                                <option value="0" >---------------</option>
+                                <option>Bail habitation</option>
+                                <option>Bail professionnel</option>
+                                <option>Autre</option>
+                            </select>
+                        </div><br>
+                       
+                        
+                        <div>
+                            <label>Commercial :</label><br>
+                            <select  name="commercial" class="form-inline" >
+                                <option value="0">---------------</option>
+                                {% for com in lescommerciaux %}
+                                <option value="{{com.id}}">{{com.nom}}</option>
+                                {% endfor %}
+                            </select>
+                        </div><br>
+                        <h6 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';"><B>Details de la proforma:</B></h6>          
+
+                        <div style="background-color: #f3f3f3;">
+                            <label>Prestation:</label><br>
+                            
+                            <select  name="description" class="form-inline" id="idpres"  onchange="insererChamps()">
+
+                                <option value="0">---------------</option>
+                                {% for pres in lespres %}
+                                <option value="{{pres.id}}">{{pres.description}}</option>
+                                {% endfor %}
+
+                            </select><br><br>
+                            <label>Montant:</label><input name="montant" type="number" class="" id="id_mht" style="width: 14%; text-align: center;" oninput="calcultoto()" value=0 />
+                            <label>Montant TVA:</label><input name="" type="number" class="" id="id_mtva" style="width: 14%; text-align:center " oninput="calcultoto()" value=0 />
+                            <label>Montant TTC:</label><input name="" type="number" class="" id="id_mttc" style="width: 14%; text-align: center;" oninput="calcultoto()" value=0 />
+                            <label>Remise:</label><input name="" type="number" class="" id="id_rm" style="width: 14%; text-align: center;" oninput="calcultoto()" value=0 />
+                            <label>Net à Payer:</label><input name="" type="number" class=""  id="id_np" style="width: 14% ; text-align: center;" value=0/>
+
+                                <a title="Inserer dans le tableau" onclick="insererCellules()" id="click" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                                      </svg>
+                                </a>
+                        </div><br>
+
+                        <table class="table" id="table_details" >
+                            <tr style="background-color: #dcd8d8;">
+                                <th ><B>N°</B></th>
+                                <th ><B>Description</B></th>
+                                <th ><B>Montant HT</B></th>
+                                <th ><B>Montant TVA</B></th>
+                                <th ><B>Montant TTC</B></th>
+                                <th ><B>Remise</B></th>
+                                <th ><B>Net à Payer</B></th>
+                            </tr>
+                            
+                            <tbody id="table_body">
+                                
+                            </tbody>
+                        </table>
+                        
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+            <!--Bloc 2 des details devis-->
+            <div class="c2" align="right">
+                <div class="divinfosup" style="width: 40%; " align="left" >
+                    <div >
+                        <label >Sous Total :</label><input name="soustotal" class="form-control" type="number" id="soustotal" value=0 style="text-align: right;" />
+                    </div>
+
+                    <div>
+                        <label>Total TVA:</label><input name="totaltva" type="number" class="form-control" id="totaltva" value=0 style="text-align: right;"  />
+                    </div>
+
+                    <div>
+                        <label>Total TTC:</label><input name="totalttc" class="form-control" type="number" id="totalttc" value=0 style="text-align: right;" />
+                    </div>
+
+                    <div>
+                        <label>Remise:</label><input name="remise" type="number" class="form-control" id="remise" value=0 style="text-align: right;" />
+                    </div>
+
+                    <div>
+                        <label>Net à payer:</label><input name="netapayer" type="number" class="form-control" id="netapayer" value=0 style="text-align: right;" />
+                    </div>
+
+                    
+                   
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+
+
+    <script >
+
+/*RECUPERATION DES BIENS DEPUIS API*/
+function viderchamps(){
+    document.getElementById('idpres').options.length=1;
+}
+
+    
+     function insererChamps() {
+        var cell, ligne;
+        idpres=document.getElementById('idpres').value;
+         /*Recuperation de l'api des données*/
+         pres=fetch("http://127.0.0.1:8000/apiprestation").then((response) => {
+         return response.json();}).then((prestations) => {
+         for ( const pres of prestations) {
+             /*Expression de la condition necessaire pour afficher les données dans les champs*/
+             if (pres.id==idpres) {
+                document.getElementById("id_mht").value=pres.montant;
+                document.getElementById("id_mttc").value=pres.montant;
+                document.getElementById("id_mtva").value=0;
+                document.getElementById("id_rm").value=0;
+                document.getElementById("id_np").value=pres.montant;
+                }
+                }
+        });
+    }
+
+
+    function insererCellules() {
+        var cell, ligne;
+        idpres=document.getElementById('idpres').value;
+         /*Recuperation de l'api des données*/
+         pres=fetch("http://127.0.0.1:8000/apiprestation").then((response) => {
+         return response.json();}).then((prestations) => {
+         for ( const pres of prestations) {
+             /*Expression de la condition necessaire pour afficher les données dans les champs*/
+             if (pres.id==idpres) {
+                //RECUPERATION DES VALEURS DES CHAMPS DE DETAILS
+                var mht= document.getElementById("id_mht").value;
+                var mtva=  document.getElementById("id_mtva").value;
+                var mttc=  document.getElementById("id_mttc").value;
+                var rm= document.getElementById("id_rm").value;
+                var np=  document.getElementById("id_np").value;
+        
+                
+                    // on récupère l'identifiant (id) de la table qui sera modifiée
+                    var tableau = document.getElementById("table_body");
+                    // nombre de lignes dans la table (avant ajout de la ligne)
+                    var nbLignes = tableau.rows.length;
+                
+                    ligne = tableau.insertRow(-1); // création d'une ligne pour ajout en fin de table
+                                                // le paramètre est dans ce cas (-1)
+                
+                    // création et insertion des cellules dans la nouvelle ligne créée
+                    cell = ligne.insertCell(0); // création et insertion de la cellule 0
+                    cell.innerHTML = pres.id ; // ajout du texte dans la cellule 0
+                
+                    cell = ligne.insertCell(1); // création insertion de la cellule 1 
+                    cell.innerHTML = pres.description; // ajout du texte dans la cellule 1
+                
+                    cell = ligne.insertCell(2); // création insertion de la cellule 2
+                    cell.innerHTML= mht ; // ajout du texte dans la cellule 2
+                
+                    cell = ligne.insertCell(3); // création insertion de la cellule 3
+                    cell.innerHTML = mtva; // ajout du texte dans la cellule 3
+
+                    cell = ligne.insertCell(4); // création insertion de la cellule 3
+                    cell.innerHTML = mttc; // ajout du texte dans la cellule 3
+
+                    cell = ligne.insertCell(5); // création insertion de la cellule 3
+                    cell.innerHTML = rm; // ajout du texte dans la cellule 3
+
+                    cell = ligne.insertCell(6); // création insertion de la cellule 3
+                    cell.innerHTML = np; // ajout du texte dans la cellule 3
+                   
+
+                    var mht= parseInt ( document.getElementById("id_mht").value);
+                    var mtva= parseInt ( document.getElementById("id_mtva").value);
+                    var mttc= parseInt ( document.getElementById("id_mttc").value);
+                    var rm=parseInt ( document.getElementById("id_rm").value);
+                    var np= parseInt ( document.getElementById("id_np").value);
+
+                    //RECUPERATION DES ANCIENNES VALEURS DES CHAMPS GENERO
+                    var nsoustotal=parseInt ( document.getElementById("soustotal").value);
+                    var ntotaltva= parseInt ( document.getElementById("totaltva").value);
+                    var ntotalttc=parseInt (document.getElementById("totalttc").value);
+                    var nremise=parseInt (document.getElementById("remise").value);
+                    var nnetapayer= parseInt (document.getElementById("netapayer").value);
+
+                  //CALCUL DES TOTO GENERO
+
+                    var c_soustotal=nsoustotal+mht
+                    var c_totaltva=ntotaltva+mtva
+                    var c_totalttc=ntotalttc+mttc
+                    var c_remise=nremise+rm
+                    var c_netapayer=nnetapayer+np
+
+                            //INSERTION DES NOUVELLES VALEURS DANS LES CHAMPS DE TOTO GENRO
+                    document.getElementById("soustotal").value=c_soustotal;
+                    document.getElementById("totaltva").value=c_totaltva;
+                    document.getElementById("totalttc").value=c_totalttc;
+                    document.getElementById("remise").value=c_remise;
+                    document.getElementById("netapayer").value=c_netapayer;
+
+
+                }
+                        }
+        });
+    }
+
+    function calcultoto(){
+        var mht= parseInt ( document.getElementById("id_mht").value);
+        var mtva= parseInt ( document.getElementById("id_mtva").value);
+        var mttc= parseInt ( document.getElementById("id_mttc").value);
+        var rm=parseInt ( document.getElementById("id_rm").value);
+        var np= parseInt ( document.getElementById("id_np").value);
+        mttc=mht+mtva
+        np=mttc-rm
+        document.getElementById("id_np").value=np;
+        document.getElementById("id_mttc").value=mttc;
+
+    }
+
+/*Recuperation et insertion dans un tableau les données JSON*/
+    // function recupinf(){
+    // pres=fetch("http://127.0.0.1:8000/apiprestation").then((response) => {
+    //      return response.json();}).then((prestations) => {
+    //         let placeholder = document.querySelector("#table_body");
+    //         let out=""
+
+    //      for ( let pres of prestations) {
+            
+    //         out += '
+    //                 <tr>
+    //                     <td>${pres.id}</td>
+    //                     <td>${pres.description}</td>
+    //                     <td>${pres.montant}</td>
+    //                 </tr>
+    //                 ';
+    //             }
+    //         });
+    //         }
+
+    </script>
+    </form>
+{% endblock %}
+
+
+
+
+
+
+
+<!-- function recupieces() {
+    idbien=document.getElementById('lesbiens').value;
+    let cb=fetch("http://127.0.0.1:8000/compbien/")
+    .then((response) => {return response.json();})
+    .then((compbien) => {
+        for ( const e of compbien) {
+            if (e.bien ==idbien) {
+                const a=document.createElement("option");
+                var value=e.id
+                var text=e.nomcomposant
+                a.text=text;
+                a.value=value;
+                app.appendChild(a);
+                
+            } 
+             
+            }
+    }
+ )} ; -->
+
+
+
+
+
+<!--
+ function recupdetailpiece() {
+    idpiece=document.getElementById('iddetail').value;
+    /*Recuperation de l'api des données*/
+    cb=fetch("http://127.0.0.1:8000/compbien/").then((response) => {
+    return response.json();}).then((compbien) => {
+    for ( const cb of compbien) {
+        /*Expression de la condition necessaire pour afficher les données dans les champs*/
+        if (cb.id==idpiece) {
+            document.getElementById('soustotal').value=cb.loyer;
+            document.getElementById('totaltva').value=cb.loyer;
+            document.getElementById('totalttc').value=cb.loyer;
+            document.getElementById('remise').value=cb.loyer;
+            document.getElementById('netapayer').value=cb.loyer;
+
+        } 
+        /*Si la condition n'est pas respectée, on initialise tous les champs à vide*/
+        else if (idpiece ==0){
+            document.getElementById('soustotal').value=0,
+            document.getElementById('totaltva').value=0;
+            document.getElementById('totalttc').value=0;
+            document.getElementById('remise').value=0;
+            document.getElementById('netapayer').value=0;
+
+        } 
+         
+        }
+    });
+}
+-->

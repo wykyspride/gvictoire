@@ -1,0 +1,196 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="POST">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';"> Details de la proforma N°: {{ laproforma.id }}</h5><br>           
+
+        <div class="bloc_champs">
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  > 
+                        <div>
+                            <label>Client:</label><br>
+                            <input name="client" type="text" class="form-control"  value="{{ laproforma.proprietaire.nom }}" style="text-align: right;"/>
+                        </div><br>
+
+                           
+                        <div>
+                            <label>N° Quittance:</label><br><input  name="numquitance" type="text" class="form-control" value="{{ laproforma.numquitance }}" style="text-align: right;"/>
+                        </div><br>
+                     
+                        <div>
+                            <label>Date création :</label><br><input name="datecreation" type="date" class="form-control" style="text-align: right;"/>
+                        </div><br>
+
+                     
+                        <div>
+                            <label>Delais paiement :</label><br><input name="delaispaiement" type="date" class="form-control" style="text-align: right;"/>
+                        </div><br>
+                        
+                        <div>
+                            <label>Bien :</label><br><input name="bien" type="text" class="form-control" value="{{ laproforma.bien.nom }}" style="text-align: right;"/>
+                        </div><br>
+                            
+                                
+                        <div>
+                            <label>Type contrat :</label><br><input name="bien" type="text" class="form-control" value="{{ laproforma.usage }}" style="text-align: right;"/>
+                        </div><br>
+
+                            
+                        <div>
+                            <label>Commercial :</label><br><input name="commercial" type="text" class="form-control" value="{{ laproforma.personnel.nom }}" style="text-align: right;"/>
+                        </div><br><br>
+               
+                        <h6 style="margin-left: 1%; color: #ed1c24; font-family:'Trebuchet MS';"><B>Details de la proforma:</B></h6>          
+
+                        <div style="background-color: #f1f1f1;">
+                            <label>Prestation:</label><br>
+                            
+                            <select  name="description" class="form-inline" id="idpres"  onchange="insererChamps()">
+
+                                <option value="0">---------------</option>
+                                {% for pres in lespres %}
+                                <option value="{{pres.id}}">{{pres.description}}</option>
+                                {% endfor %}
+
+                            </select><br><br>
+                            <label>Montant:</label><input name="montant" type="number" class="" id="id_mht" style="width: 14%; text-align: center;" oninput="calcultoto()"/>
+                            <label>Montant TVA:</label><input name="totaltva" type="number" class="" id="id_mtva" style="width: 14%; text-align:center " oninput="calcultoto()" />
+                            <label>Montant TTC:</label><input name="totalttc" type="number" class="" id="id_mttc" style="width: 14%; text-align: center;" oninput="calcultoto()" />
+                            <label>Remise:</label><input name="remise" type="number" class="" id="id_rm" style="width: 14%; text-align: center;" oninput="calcultoto()" />
+                            <label>Net à Payer:</label><input name="netapayer" type="number" class=""  id="id_np" style="width: 14% ; text-align: center;"/>
+
+                            <div align="right" style="margin-right: 5%;">
+                                <button title="Inserer dans le tableau"  id="click" type="submit" class="btn btn-floating" style="background-color: rgb(17, 59, 59); color: #ed1c24;">
+                                    <!--<button title="Inserer dans le tableau" onclick="insererCellules()" id="click" type="submit"> -->
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                                      </svg>
+                                </button>
+                            </div>
+                        </div><br>
+
+                        <table class="table" id="table_details" >
+                            <tr style="background-color: #dcd8d8;">
+                                <th ><B>N°</B></th>
+                                <th ><B>Description</B></th>
+                                <th ><B>Montant HT</B></th>
+                                <th ><B>Montant TVA</B></th>
+                                <th ><B>Montant TTC</B></th>
+                                <th ><B>Remise</B></th>
+                                <th ><B>Net à Payer</B></th>
+                                <th ></th>
+
+                            </tr>
+                            
+                            <tbody id="table_body">
+                            </tbody>
+                            {% for lp in lesdetailsprof %}
+                        <tr>
+                                <th scope="row"><B>{{lp.id}}</B></th>
+                                <td >{{lp.prestations.description}}</td>
+                                <td >{{lp.soustotal}}</td>
+                                <td >{{lp.totaltva}}</td>
+                                <td >{{lp.totalttc}}</td>
+                                <td >{{lp.remise}}</td>
+                                <td >{{lp.netapayer}}</td>
+
+                                <!--Boutton voir details-->
+                            
+                                <td  title="Supprimer">
+                                        <a class="btn-floating" href="/supligneprof/{{lp.id}}" ><svg id="i-trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  >
+                                        <path d="M28 6 L6 6 8 30 24 30 26 6 4 6 M16 12 L16 24 M21 12 L20 24 M11 12 L12 24 M12 6 L13 2 19 2 20 6" />
+                                    </svg></a>
+                                </td>
+                    
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+            <!--Bloc 2 des details devis-->
+            <div class="c2" align="right">
+                <div class="divinfosup" style="width: 40%; " align="left" >
+                    <div >
+                        <label >Sous Total :</label><input name="p_soustotal" class="form-control" type="number" id="soustotal" style="text-align: right;" placeholder="{{laproforma.soustotal}}" />
+                    </div>
+
+                    <div>
+                        <label>Total TVA:</label><input name="p_totaltva" type="number" class="form-control" id="totaltva" placeholder="{{laproforma.totaltva}}" style="text-align: right;"  />
+                    </div>
+
+                    <div>
+                        <label>Total TTC:</label><input name="p_totalttc" class="form-control" type="number" id="totalttc" placeholder="{{laproforma.totalttc}}" style="text-align: right;" />
+                    </div>
+
+                    <div>
+                        <label>Remise:</label><input name="p_remise" type="number" class="form-control" id="remise" placeholder="{{laproforma.remise}}" style="text-align: right;" />
+                    </div>
+
+                    <div>
+                        <label>Net à payer:</label><input name="p_netapayer" type="number" class="form-control" id="netapayer" placeholder="{{laproforma.netapayer}}" style="text-align: right;" />
+                    </div>
+
+                    
+                   
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><a href="/etatprofm/{{laproforma.id}} " class="btn btn-primary" type="submit" style="background-color: rgb(17, 59, 59);">Imprimer</a></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+
+
+    <script >
+
+/*RECUPERATION DES BIENS DEPUIS API*/
+function viderchamps(){
+    document.getElementById('idpres').options.length=1;
+}
+
+    
+     function insererChamps() {
+        var cell, ligne;
+        idpres=document.getElementById('idpres').value;
+         /*Recuperation de l'api des données*/
+         pres=fetch("http://127.0.0.1:8000/apiprestation").then((response) => {
+         return response.json();}).then((prestations) => {
+         for ( const pres of prestations) {
+             /*Expression de la condition necessaire pour afficher les données dans les champs*/
+             if (pres.id==idpres) {
+                document.getElementById("id_mht").value=pres.montant;
+                document.getElementById("id_mttc").value=pres.montant;
+                document.getElementById("id_mtva").value=0;
+                document.getElementById("id_rm").value=0;
+                document.getElementById("id_np").value=pres.montant;
+                }
+                }
+        });
+    }
+
+
+    
+    function calcultoto(){
+        var mht= parseInt ( document.getElementById("id_mht").value);
+        var mtva= parseInt ( document.getElementById("id_mtva").value);
+        var mttc= parseInt ( document.getElementById("id_mttc").value);
+        var rm=parseInt ( document.getElementById("id_rm").value);
+        var np= parseInt ( document.getElementById("id_np").value);
+        mttc=mht+mtva
+        np=mttc-rm
+        document.getElementById("id_np").value=np;
+        document.getElementById("id_mttc").value=mttc;
+
+    }
+
+
+    </script>
+    </form>
+{% endblock %}

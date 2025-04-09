@@ -1,0 +1,115 @@
+
+<div id="">
+    <label> Bien</label>
+    <select  name="bien" class="form-inline" id="select_bien" onchange="listepiece()" >
+        {% for bien in lesbiens %}
+            <option id="option_bien" value="{{bien.id}}" >{{bien.nom}}</option>
+        {% endfor %}
+    </select>
+</div><br>
+
+<div >
+    <input id ="composantp">
+</div><br>
+
+             <!--RECUPERATION DES COMPOSANTS D'UN BIEN SELECTIONNE-->
+             <script>
+                function listepiece() {
+                    var lespieces=document.getElementById('select_bien').value
+                    var lespieceselectionnes=""
+                    var nbrepieces=0;
+                    var chaine_liste="";
+                    var i=0;              
+                    var id_bien=document.getElementById('select_bien').value;
+                    document.getElementById('composantp').value=id_bien
+    
+                    if (id_bien)
+                        {
+                            lespieceselectionnes=lespieces(id_bien);
+                            nbrepieces=lespieceselectionnes.length();
+                            alert ('le nombre de pieces selectionné est:' +" " + nbrepieces );
+                            chaine_liste="<select id='choix_ville' class='form-control' onChange='verif_piece(id_bien)'>"; 
+                            chaine_liste +="<option value='selection'> selectionner une piece </option>";  
+                                for( i=0; i < nbrepieces; i++) 
+                                    {
+                                        chaine_liste+= "<option value='"+ lesbiens[i] + " ' > "+ lesbiens[i] + " </option>"; 
+                                    }
+                            chaine_liste += "</select>";   
+                            
+                            document.getElementById('composantp').innerHTML=chaine_liste;                    
+                        }
+                    else
+                        {
+                            alert('Revois ton code')
+    
+                        }
+    
+                }
+    
+            </script>
+
+
+
+
+<select id="slct1">
+    <option> choose a pecies</option>
+</select>
+
+
+
+
+
+
+
+
+<!--CHOIX 2-->
+
+<br><br>
+
+<select id="select1">
+    <option>choose a pecies </option>
+</select><br>
+
+<select id="select2">
+    <option></option>
+</select>
+
+<script>
+    let species=["Animals","Vegetables"];
+    let animals=["lion", "cow","turlte"];
+    let vegetables=["cucumber","salade","pumking"];
+
+    let select1=document.getElementById("select1");
+    let select2=document.getElementById("select2");
+
+    species.forEach(function addspecies(item) 
+        {
+            let option=document.createElement("option");
+            option.text=item;
+            option.value=item;
+            select1.appendChild(option);
+        });
+
+    select1.onchange = function () {
+    select2.innerHTML = "<option></option>";
+
+    if (this.value =="Animals") {
+        addToselect2 (animals);
+    } 
+
+    if (this.value == "Vegetables") {
+        addToselect2 (vegetables);
+    }    
+}
+
+function addToselect2(arr)
+        {
+            arr.forEach(function (item) 
+            {
+                let option = document.createElement ("option");
+                option.text=item;
+                option.value=item;
+                select2.appendChild(option);
+            });
+        }
+</script>

@@ -1,0 +1,266 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="POST">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Création de contrat:</h5><br>           
+
+        <div class="bloc_champs">
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  >  
+
+                        <div>
+                            <label>Biens:</label><br>
+                            <select  name="lesbiens" class="form-inline" id="lesbiens" onchange="recupieces()" onclick="viderchamps()">
+                                <option >---------------</option>
+                                {% for bien in lesbiens %}
+                                <option value="{{bien.id}}">{{bien.nom}}</option>
+                                {%endfor%}
+                            </select>
+                        </div><br>
+                       
+<!--Recuperation des valeurs par la fonction js: recupdetailpiece-->
+                        <div>
+                            <label>Appartements:</label><br>
+                            <select  name="app" class="form-inline" id="app" onchange="recupdetailpiece()">
+                                <option value="0"  >---------------</option>
+                                
+                            </select>
+                        </div><br>
+                       
+                        <div>
+                            <label>Client:</label><br>
+                            <select  name="client_id" class="form-inline" >
+                                <option value="0"  >---------------</option>
+                                {% for client in lesclients %}
+                                <option value="{{client.id}}">{{client.nom}}</option>
+                                {%endfor%}
+                            </select>
+                        </div><br>
+                        
+                        
+                        <div>
+                            <label>Type contrat:</label><br>
+                            <select  name="typebail" class="form-inline" >
+                                <option value="0" >---------------</option>
+                                <option>Bail habitation</option>
+                                <option>Bail professionnel</option>
+                                <option>Autre</option>
+                            </select>
+                        </div><br>
+                       
+                        
+                        <div>
+                            <label>Commercial :</label><br>
+                            <select  name="newuser_id" class="form-inline" >
+                                <option value="0">---------------</option>
+                                {% for com in lescommerciaux %}
+                                <option value="{{com.id}}">{{com.nom}}</option>
+                                {% endfor %}
+                            </select>
+                        </div><br>
+
+                        <!--RECUPERATION DES COMPOSANTS EN FONCTION DU  BIEN CHOISI-->
+                        <!--
+                        <div>
+                            {{form_b.as_p}}
+                            {{form_c.as_p}}
+                        </div>-->
+                        
+                        <div>
+                            <label>Debut :</label><br><input name="debut" type="date" class="form-control"  onchange="caldure()" id="debut" />
+                        </div><br>
+
+                        <div>
+                            <label>Fin :</label><br><input name="fin" type="date" class="form-control" onchange="caldure()" id="fin" />
+                        </div><br>
+
+                        <div>
+                            <label>Durée :</label><br><input name="dureecontrat" type="text" class="form-control"  id="dureecontrat"/>
+                        </div><br>
+
+                    </div>
+
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+            <!--Bloc 2 des details proprietaire-->
+            <div class="c2">
+                <div class="divinfosup">
+                    <div>
+                        <label>Loyer :</label><br><input name="loyer" class="form-control" type="number" id="loyer" />
+                    </div><br>
+                    <div id="loyer"></div>
+
+                    <div>
+                        <label>Loyer avance:</label><br><input name="loyeravance" type="number" class="form-control" id="loyeravance"/>
+                    </div><br>
+
+                    <div>
+                        <label>Garantie:</label><br><input name="depotgarantie" class="form-control" type="number" id="garantie" />
+                    </div><br>
+
+
+                    <div>
+                        <label>Caution:</label><br><input name="caution" type="number" class="form-control" id="caution"/>
+                    </div><br>
+
+                    <div>
+                        <label>Frais agence:</label><br><input name="fraisagence" type="number" class="form-control" id="fraisagence"/>
+                    </div><br>
+
+                    <div>
+                        <label>Caution CIE:</label><br><input name="cautioncie" type="number" class="form-control" id="cautioncie"/>
+                    </div><br>
+
+                    
+                    <div>
+                        <label>Delais paiement :</label><br><input name="delaispaiement" type="number" class="form-control"/>
+                    </div><br>
+
+                    
+                    <div>
+                        <label>penalite (%) :</label><br><input name="penalite" type="number" class="form-control"/>
+                    </div><br>
+
+                    <div id ="composantp">
+                    </div><br>
+                    
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+
+
+<script>
+/*RECUPERATION DES BIENS DEPUIS API*/
+function viderchamps(){
+    document.getElementById('app').options.length=1;
+}
+
+function recupieces() {
+    idbien=document.getElementById('lesbiens').value;
+    let cb=fetch("http://127.0.0.1:8000/compbien/")
+        .then((response) => {return response.json();})
+        .then((compbien) => {
+            /*pour tous les elements de notre api, on insere dans le combo si l'id du bien du composant est egal à l'id du bien selectionné*/
+            for ( const e of compbien) {
+                if (e.bien ==idbien) {
+                 const a=document.createElement("option");
+                var value=e.id
+                var text=e.nomcomposant
+                a.text=text;
+                a.value=value;
+                app.appendChild(a);
+                            
+                } 
+                         
+            }
+        }
+    )} ;
+
+/*RECUPERATION DES DETAILS DU COMPOSANT DU BIEN */
+
+    function recupdetailpiece() {
+        idpiece=document.getElementById('app').value;
+        /*Recuperation de l'api des données*/
+        cb=fetch("http://127.0.0.1:8000/testsdatapi").then((response) => {
+        return response.json();}).then((compbien) => {
+        for ( const cb of compbien) {
+            /*Expression de la condition necessaire pour afficher les données dans les champs*/
+            if (cb.id==idpiece) {
+                document.getElementById('garantie').value=cb.depotgarantie,
+                document.getElementById('loyer').value=cb.loyer;
+                document.getElementById('caution').value=cb.caution;
+                document.getElementById('cautioncie').value=cb.cautioncie;
+                document.getElementById('loyeravance').value=cb.loyeravance;
+                document.getElementById('fraisagence').value=cb.fraisagence;
+                document.getElementById('datecreation').value=cb.datecreation;
+
+
+
+            } 
+            /*Si la condition n'est pas respectée, on initialise tous les champs à vide*/
+            else if (idpiece ==0){
+                document.getElementById('garantie').value="",
+                document.getElementById('loyer').value="";
+                document.getElementById('caution').value="";
+                document.getElementById('cautioncie').value="";
+                document.getElementById('loyeravance').value="";
+                document.getElementById('fraisagence').value="";
+
+            } 
+             
+            }
+        });
+    }
+
+
+
+    /*Calcul de la durée du contrat*/
+    function caldure(){
+        var debut=document.getElementById("debut").value;
+        var fin=document.getElementById("fin").value;
+        const d1= new Date(debut);
+        const d2= new Date(fin);
+        
+        if (fin ==""){
+
+            document.getElementById("dureecontrat").value="0 an(s)"+ " "+ "0 mois"+" "+ "0 jour(s)";
+        }
+            
+            else if (fin != "") {
+            /*Durée total en seconde*/
+            const dure= Math.abs(d2-d1);
+            /*Durée total en jours*/
+            const nbjour=Math.ceil(dure / (1000*60*60*24));
+            /*document.getElementById("output").innerHTML=nbjour;*/
+            /*Nombre d'année*/
+            var ane=nbjour/365;
+            /*Nombre de mois*/
+            var mois=((ane-Math.trunc(ane))*12);
+            /*Nombre de jours*/
+            var jourrestant=((mois-Math.trunc(mois))*31);
+            /*Recuperation des valeurs*/
+            document.getElementById("dureecontrat").value=Math.trunc(ane)+" an(s)"+ " "+ Math.trunc(mois)+" "+ "mois"+ " "+ Math.trunc(jourrestant)+" "+ "jour(s)";
+
+            }
+    }
+
+
+
+    </script>
+    </form>
+{% endblock %}
+
+
+
+
+
+
+
+
+<!-- function recupieces() {
+    idbien=document.getElementById('lesbiens').value;
+    let cb=fetch("http://127.0.0.1:8000/compbien/")
+    .then((response) => {return response.json();})
+    .then((compbien) => {
+        for ( const e of compbien) {
+            if (e.bien ==idbien) {
+                const a=document.createElement("option");
+                var value=e.id
+                var text=e.nomcomposant
+                a.text=text;
+                a.value=value;
+                app.appendChild(a);
+                
+            } 
+             
+            }
+    }
+ )} ; -->

@@ -1,0 +1,83 @@
+{% extends 'maquette.html'%}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+<form method="post">
+
+    {% csrf_token %}
+    <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Création de composant:</h5><br>           
+
+    <div class="bloc_champs">
+        <!--1-->
+            <div class="c1" style="width: 100%;">
+
+                <div class="divchampsperso"  >  
+                    
+                    <div>
+                        <label>Bien:</label><input name="boien_id" type="text" class="form-control" placeholder="" value="{{lebien.nom}}"/>
+                    </div><br>
+
+
+                    <div>
+                        <label>Nature Composant:</label><select  name="nature" class="form-inline">
+                            <option>Maison</option>
+                            <option>Magasin</option>
+                            <option>Parking</option>
+                            <option>Autre</option>
+                        </select>
+                    </div><br>
+
+                    <div >
+                        <label>Nom composant</label><input name="nomcomposant" class="form-control" placeholder="" />
+                    </div><br>
+
+                    <div>
+                        <label>Nbre Pièces</label><input name="nbrepieces" class="form-control" placeholder=""/>
+                    </div><br>
+                    
+                    <div>
+                        <label>Descriptions</label><input name="descriptions" type="text" class="form-control" placeholder=""/>
+                    </div><br>
+
+                    <div>
+                        <label>Loyer</label><input name="loyer" type="number" class="form-control" placeholder="" />
+                    </div><br>
+    
+                    <div>
+                        <label>Superficie</label><input name="superficie" type="number" class="form-control" placeholder=""/>
+                    </div><br>
+    
+                    <div>
+                        <label>Caution (Nbre de mois)</label><input name="caution" type="number" class="form-control" placeholder="" value="{{lebien.caution}}"/>
+                    </div><br>
+    
+                    <div>
+                        <label>Loyer avance (Nbre de mois)</label><input name="loyeravance" type="number" class="form-control" placeholder="" value="{{lebien.loyeravance}}"/>
+                    </div><br>
+    
+                    <div>
+                        <label>Frais agence (Nbre de mois)</label><input name="fraisagence" type="number" class="form-control" placeholder="" value="{{lebien.fraisagence}}"/>
+                    </div><br>
+
+                    <div>
+                        <label>Depot Garantie (Nbre de mois)</label><input name="depotgarantie" type="number" class="form-control" placeholder="" />
+                    </div><br>
+    
+                    <div>
+                        <label>Caution CIE</label><input name="cautioncie" type="number" class="form-control" placeholder="" value="{{lebien.cautioncie}}"/>
+                    </div><br>
+    
+                    <div>
+                        <label>Statut</label><input name="Statut" type="text" class="form-control" placeholder=""/>
+                    </div><br>
+                
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+

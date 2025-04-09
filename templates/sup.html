@@ -1,0 +1,34 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+<!--AFFICHER LES PRODUITS DANS UN TABLEAU-->
+
+ <form align="center" method="post" style="color: red;  border-radius: 20%; background-color: #f1f1f1; box-shadow: 6px 4px 16px rgb(139, 114, 115) ;     font-family:'Courier New', Courier, monospace;">
+    {%csrf_token%}
+    
+    <div style="margin-top: 13%;">
+    
+        <div>
+              <div class="spinner-grow text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div><B>ALERTE SUPPRESSION !!!</h4>
+              <div class="spinner-grow text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>  
+        </div><br>
+    
+    </div>
+        <div >
+            
+            <label style="color: red;" ><B>Voulez-vous supprimer cette ligne N°: {{laligne.id}}&nbsp ?</B><br>
+            <label style="color: red;" ><B>Description:</B>{{laligne.description.description}}&nbsp</label><br>
+            <label style="color: red;" ><B>Sous Total:</B>  {{laligne.soustotal}}&nbsp</label><br>
+            <label style="color: red;" ><B>Net à payer:</B>  {{laligne.netapayer}}&nbsp</label><br><br>
+            <div align="center">
+                <button type="submit"  class="btn btn-danger" >Oui</button>
+                <a href="/detailprofm/{{laproforma.id}}" class="btn btn-primary" >Non</a><br><br>
+            </div>
+        </div>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="post">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Création de prospect:</h5><br>           
+
+        <div class="bloc_champs">
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  >  
+
+                        <div>
+                            <label>Genre:</label><br>
+                            <select  name="genre" class="form-inline" >
+                                <option>------------</option>
+                                <option>Monsieur</option>
+                                <option>Madame</option>
+                                <option>Entreprise</option>
+                                <option>Autre</option>
+                            </select>
+                        </div><br>
+                       
+                        <div >
+                            <label>Nom du client:</label><br><input name="nom" class="form-control" />
+                        </div><br>
+
+    
+                        <div>
+                            <label>contact 1:</label><br><input name="contact1" class="form-control" type="text"/>
+                        </div><br>
+
+                        <div>
+                            <label>contact 2:</label><br><input name="contact2" class="form-control" type="text"/>
+                        </div><br>
+
+                        <div>
+                            <label>Adresse mail:</label><br><input name="adressemail" class="form-control" type="email"/>
+                        </div><br>
+
+                        <div>
+                            <label>Adresse Postale:</label><br><input name="adressepostalloca" class="form-control" type="text"/>
+                        </div><br>
+
+                        <div>
+                            <label>Date Naissance:</label><br><input name="datenaisloca" type="date" class="form-control"/>
+                        </div><br>
+    
+                        <div>
+                            <label>Lieu Naissance:</label><br><input name="lieunaissloca" type="text" class="form-control"/>
+                        </div><br><br>
+
+
+                        <div>
+                            <label>Besoin:</label><br>
+                            <textarea class="texarea" name="besoin" type="text"  style="width: 95%;" class="form-control"></textarea>
+                        </div><br>
+
+                        <div>
+                            <label>Zone:</label><br>
+                            <textarea class="texarea" name="localite" type="text"  style="width: 95%;" class="form-control"></textarea>
+                        </div><br>
+    
+                        <div>
+                            <label>Budget:</label><br><input name="budget" type="number" class="form-control"/>
+                        </div><br>
+    
+                        <div>
+                            <label>Fonction:</label><br><input name="fonction" type="text" class="form-control"/>
+                        </div><br>
+    
+    
+                        <div>
+                            <label>Habitation actuelle:</label><br><input name="lieuhabitationactuelle" type="text" class="form-control"/>
+                        </div><br>
+    
+                        <div>
+                            <label>Situation matrimoniale:</label><br><input name="situationmatrimoniale" type="text" class="form-control"/>
+                        </div><br>
+    
+                        <div>
+                            <label>Nombre enfant:</label><br><input name="nombreenfant" type="number" class="form-control"/>
+                        </div><br>
+
+                        <div>
+                            <label>Nationalité:</label><br><input name="nationnaliteloca" type="text" class="form-control"/>
+                        </div><br>
+                        
+                    </div><br>
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+            <!--Bloc 2 des details proprietaire-->
+            <div class="c2">
+                <div class="divinfosup">
+                    <div>
+                        <label>Type pièce:</label><br>
+                        <select  name="naturepieceloca" class="form-inline">
+                            <option >------------</option>
+                            <option>CNI</option>
+                            <option>Passeport</option>
+                            <option>Permis de conduire</option>
+                            <option>Carte de sejours</option>
+                        </select>
+                        </div><br>
+
+                    <div>
+                        <label>N° Pièce:</label><br><input name="numpiece" class="form-control"/>
+                    </div><br>
+                
+                    <div>
+                        <label>Date edition piece:</label><br><input name="dateeditionpiece" class="form-control" type="date"/>
+                    </div><br>
+                
+                
+                    <div>
+                        <label>Lieu edition pièce:</label><br><input name="lieueditionpiece" type="text" class="form-control"/>
+                    </div><br>
+
+                    <div>
+                        <label>Date fin pièce:</label><br><input name="datefinpiece" type="date" class="form-control"/>
+                    </div><br>
+                
+                
+                    <div>
+                        <label>Cas d'urgence:</label><br><input name="personnecasurgent" type="text" class="form-control"/>
+                    </div><br>
+
+                    <div>
+                        <label>Contact urgence:</label><br><input name="contacturgence" type="contacturgence" class="form-control" type="tel"/>
+                    </div><br>
+                
+                    <div>
+                        <label>Representant:</label><br><input name="representant" type="text" class="form-control"/>
+                    </div><br>
+
+                    <div>
+                        <label>Contact Representant:</label><br><input name="contact1representant" type="text" class="form-control"/>
+                    </div><br>
+                    <div>
+                        <label>Mail Representant:</label><br><input name="mailrepesentant" type="email" class="form-control"/>
+                    </div><br>
+                    <div>
+                        <label>Capital:</label><br><input name="capital" type="number" class="form-control"/>
+                    </div><br>
+                    <div>
+                        <label>NCC:</label><br><input name="ncc" type="text" class="form-control"/>
+                    </div><br>
+                    <div>
+                        <label>RC:</label><br><input name="rc" type="text" class="form-control"/>
+                    </div><br>
+
+                    <div>
+                        <label>Siege social:</label><br><input name="siegesocial" type="text" class="form-control"/>
+                    </div><br>
+
+                    <div>
+                        <label>Commentaire:</label><br>
+                        <textarea class="texarea" name="commentaire" type="text"  style="width: 95%;" class="form-control"></textarea>
+                    </div><br>
+
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+        </form>
+
+        {% endblock %}
+
+

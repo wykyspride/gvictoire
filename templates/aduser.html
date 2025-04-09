@@ -1,0 +1,67 @@
+{% load static%}
+
+{% block content %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/conex.css'%}" />
+<div class="wrapper">
+    
+
+    <div class="logo">
+        <img src="/static/images/logoconnex.png" alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        <!--Twitter-->
+    </div>
+
+    <form class="p-3 mt-3" method="POST" action="" >
+
+        {% csrf_token %}
+
+
+        <div >
+            <select class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem; border: 0rem;" name="genre">
+                <option value="" >Civilité</option>
+                <option value="Homme">Homme</option>
+                <option value="Femme">Femme</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;">
+            <span class="far fa-user"></span>
+            <input type="text" name="nom" id="nom" placeholder="Nom complet" style="font-size: 0.9rem;">
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;">
+            <span class="far fa-user"></span>
+            <input type="text" name="admail" id="admail" placeholder="Email" style="font-size: 0.9rem;">
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;">
+            <span class="fas fa-key"></span>
+            <input type="text" name="contact" id="contact" placeholder="Contact" style="font-size: 0.9rem;">
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;">
+            <span class="far fa-user"></span>
+            <input type="text" name="localisation" id="localisation" placeholder="Localisation" style="font-size: 0.9rem;">
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;" >
+            <span class="far fa-user"></span>
+            <input  type="file" name="photoid" id="photoid" style="font-size: 0.9rem;">
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;">
+            <span class="far fa-user"></span>
+            <input type="password" name="password" id="password" placeholder="Mot de passe" style="font-size: 0.9rem;">
+        </div>
+
+        <div class="form-field d-flex align-items-center" style="height: 2rem; width: 18rem;">
+            <span class="far fa-user"></span>
+            <input type="password" name="repassword" id="repassword" placeholder="Ressaisire mot de passe" style="font-size: 0.9rem;">
+        </div>
+
+        <button type="submit"  class="btn mt-3">Valider</button>
+    </form>
+</div>
+{% endblock%}

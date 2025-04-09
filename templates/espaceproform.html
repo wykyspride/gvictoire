@@ -1,0 +1,78 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+
+<!--AFFICHER LES PRODUITS DANS UN TABLEAU-->
+<h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Espace Proformas  mandat:</h5>              
+
+  <!--Bouton creer nouveau-->
+  <div align="right">
+    <a href="#" class="btn btn-primary" >Imprimer</a><br><br>
+  </div>
+
+  <table class="table"  >
+      <tr style="background-color: #f1f1f1;">
+        <th ><B>N°</B></th>
+        <th><B>Proprietaire</B></th>
+        <th><B>Date</B></th>
+        <th><B>Montant</B></th>
+        <th><B>Montant TVA</B></th>
+        <th><B>Total TTC</B></th>
+        <th><B>Remise</B></th>
+        <th><B>Net à payer</B></th>
+        <th></th>
+        <th></th>
+        <th><B>Actions</B></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+  
+      {% for prof in lesproformam %}
+       <tr>
+              <th scope="row">{{prof.id}}</th>
+              <td >{{prof.proprietaire.nom}}</td>
+              <td >{{prof.dateproforma}}</td>
+              <td >{{prof.soustotal}}</td>
+              <td >{{prof.montanttva}}</td>
+              <td >{{prof.totalttc}}</td>
+              <td >{{prof.remise}}</td>
+              <td >{{prof.netapayer}}</td>
+              <td>
+
+              <!--Boutton voir details-->
+              <td >  
+                <a href="detailprofm/{{prof.id}}" title="Voir details" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                    <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+                  </svg>
+                </a>
+              </td>
+
+
+            <td><a href="modifproprio/{{prof.id}}"  title="Modifier">
+              <svg id="i-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+              </svg>
+              </a>
+            </td>
+           
+            <td><a href="adfactm/{{prof.id}}"  title="Transformer en facture">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sign-turn-right" viewBox="0 0 16 16">
+                <path d="M5 8.5A2.5 2.5 0 0 1 7.5 6H9V4.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L9.41 8.658A.25.25 0 0 1 9 8.466V7H7.5A1.5 1.5 0 0 0 6 8.5V11H5z"/>
+                <path fill-rule="evenodd" d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134Z"/>
+              </svg>
+            </a></td>
+            
+            <td  title="Supprimer">
+                      <a href="deleteprod/{{proforma.idpro}}" ><svg id="i-trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  >
+                      <path d="M28 6 L6 6 8 30 24 30 26 6 4 6 M16 12 L16 24 M21 12 L20 24 M11 12 L12 24 M12 6 L13 2 19 2 20 6" />
+                  </svg></a>
+            </td>
+  
+              </td>
+       </tr>
+          {% endfor %}
+    </table>
+
+    {% endblock %}

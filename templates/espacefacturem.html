@@ -1,0 +1,88 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+
+<!--AFFICHER LES PRODUITS DANS UN TABLEAU-->
+<h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Espace Factures  mandat:</h5>              
+
+  <!--Bouton creer nouveau-->
+  <div align="right">
+    <a href="#" class="btn btn-primary" >Imprimer</a><br><br>
+  </div>
+
+  <table class="table"  >
+      <tr style="background-color: #f1f1f1;">
+        <th ><B>N°</B></th>
+        <th><B>Proprietaire</B></th>
+        <th><B>Date</B></th>
+        <th><B>Montant</B></th>
+        <th><B>Montant TVA</B></th>
+        <th><B>Total TTC</B></th>
+        <th><B>Remise</B></th>
+        <th><B>Net à payer</B></th>
+        <th><B>Payé</B></th>
+        <th><B>Solde</B></th>
+        <th><B>Statut</B></th>
+        <th></th>
+        <th><B>Actions</B></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+  
+      {% for fac in lesfactures %}
+       <tr>
+              <th scope="row">{{fac.id}}</th>
+              <td >{{fac.proprietaire.nom}}</td>
+              <td >{{fac.datefacture}}</td>
+              <td >{{fac.soustotal}}</td>
+              <td >{{fac.montanttva}}</td>
+              <td >{{fac.totalttc}}</td>
+              <td >{{fac.remise}}</td>
+              <td >{{fac.netapayer}}</td>
+              <td >{{fac.montantregle}}</td>
+              <td >{{fac.resteapayer}}</td>
+              <td >{{fac.status.libelle}}</td>
+              <td>
+
+              <!--Boutton voir details-->
+              <td >  
+                <a href="detailprofm/{{fac.id}}" title="Voir details" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                    <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+                  </svg>
+                </a>
+              </td>
+
+              <td >  
+                <a href="adreglementm/{{fac.id}}" title="Regler la facture" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+                <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+              </svg>
+            </a>
+          </td>
+
+
+            <td><a href="modifproprio/{{fac.id}}"  title="Modifier">
+              <svg id="i-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+              </svg>
+              </a>
+            </td>
+           
+
+            <td  title="Annuler">
+                    <a href="deleteprod/{{fac.idpro}}" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                  </svg></a>
+            </td>
+  
+              </td>
+       </tr>
+          {% endfor %}
+    </table>
+
+    {% endblock %}

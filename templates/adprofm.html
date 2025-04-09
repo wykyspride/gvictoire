@@ -1,0 +1,83 @@
+{% extends 'maquette.html' %}
+{% block contenu %}
+{% load static %}
+<link  rel="stylesheet" type="text/css" href="{% static 'css/stylesaisie.css'%}" />
+
+        <form method="POST">
+            
+            {% csrf_token %}
+
+        <!--Bloc conteneur-->
+        <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Création de proforma Mandat:</h5><br>           
+
+        <div class="bloc_champs" >
+            <!--Bloc 1 des details proprietaire-->
+                <div class="c1">
+
+                    <div class="divchampsperso"  > 
+
+                        <div>
+                            <label>Client:</label><br>
+                            <input name="client" type="text" class="form-control"  value="{{leproprio.nom}}"/>
+
+                        </div><br>
+
+                           
+                    <div>
+                        <label>N° Quittance:</label><br><input  name="numquitance" type="text" class="form-control"/>
+                    </div><br>
+
+                    
+                    <div>
+                        <label>Date devis :</label><br><input name="datecreation" type="date" class="form-control" />
+                    </div><br>
+
+                     
+                    <div>
+                        <label>Delais paiement :</label><br><input name="delaispaiement" type="date" class="form-control"/>
+                    </div><br>
+                        
+                       
+                        <div>
+                            <label>Biens:</label><br>
+                            <select  name="bien" class="form-inline" id="lesbiens" >
+                                <option >---------------</option>
+                                {% for bien in lesbiens %}
+                                <option value="{{bien.id}}">{{bien.nom}}</option>
+                                {%endfor%}
+                            </select>
+                        </div><br>
+                       
+                        
+                                               
+                        <div>
+                            <label>Usage:</label><br>
+                            <select  name="usage" class="form-inline" >
+                                <option value="0" >---------------</option>
+                                <option>Bail habitation</option>
+                                <option>Bail professionnel</option>
+                                <option>Autre</option>
+                            </select>
+                        </div><br>
+                       
+                        
+                        <div>
+                            <label>Commercial :</label><br>
+                            <select  name="commercial" class="form-inline" >
+                                <option value="0">---------------</option>
+                                {% for com in lepersonnel %}
+                                <option value="{{com.id}}">{{com.nom}}</option>
+                                {% endfor %}
+                            </select>
+                        </div><br>
+                        
+                        
+            </div><!--Fin Bloc 1 des details proprietaire-->
+
+                   
+                    <div align="Right" style="margin-top: 10px; margin-right: 40px;"><button  class="btn btn-danger" type="submit">Valider</button></div>
+                </div><br>
+            </div><!--Fin Bloc 2 des details proprietaire-->
+
+    </form>
+{% endblock %}

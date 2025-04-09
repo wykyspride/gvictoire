@@ -1,0 +1,104 @@
+
+
+.contener{
+    border: 0.1rem  #cfe2ff;
+    width: 95%;
+    display: flex ;
+    align-content: center;
+    margin-top: 325px;
+    align-items: center;
+    border-radius: 1rem;
+    background: radial-gradient(white,#f1f6fe);
+    /*Centrer Horizontalement et verticalement*/
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 6px 4px 16px rgb(139, 114, 115) ;
+
+}
+
+.contener label{
+    color: #9f1225;
+    font-style: normal;
+    font-size: 80%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    
+}
+
+.c1{
+    border: none;
+    width: 50%;
+    height: 85%;
+    margin-left: 2%;
+}
+
+.c2{
+    border: none;
+    width: 50%;
+    height: 85%;
+    margin-right: 2%; 
+
+}
+
+
+.divchampsperso input{
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    box-shadow: 6px 4px 10px rgb(134, 132, 132) ;
+
+}
+
+.divinfosup input{
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    box-shadow: 6px 4px 10px rgb(134, 132, 132) ;
+
+}
+
+.texarea{
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    box-shadow: 6px 4px 10px rgb(134, 132, 132) ;
+}
+
+.selectfield {
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    box-shadow: 6px 4px 10px rgb(134, 132, 132) ;
+
+}
+
+
+.bande{
+    height: 100px;
+    background-color: rgb(237,28,36);
+}
+
+.footer1{
+    position: absolute;
+    width: 100%;
+    height: 0;
+    bottom: 0;
+}
+
+

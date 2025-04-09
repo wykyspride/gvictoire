@@ -1,0 +1,14 @@
+    {% for p in lapiece %}
+    <option>
+            {{p.nomcomposant}}
+    </option>
+
+    <label>N°:</label><input value="{{p.id}}"><br><br>
+    <label>Nom:</label><input value="{{p.nomcomposant}}"><br><br>
+    <label>Loyer:</label><input value="{{p.loyer}}"><br><br>
+    <label>Descriptions:</label><input value="{{p.descriptions}}"><br><br>
+    <label>Superficie:</label><input value="{{p.superficie}}"><br><br>
+    <label>Nature:</label><input value="{{p.nature}}"><br><br>
+    <label>Statut:</label><input value="{{p.Statut}}">
+            
+    {% endfor %}

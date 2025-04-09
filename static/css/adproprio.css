@@ -1,0 +1,82 @@
+
+
+.contener{
+    border: 0.1rem  #cfe2ff;
+    width: 95%;
+    display: flex ;
+    align-content: center;
+    margin-top: 270px;
+    align-items: center;
+    border-radius: 1rem;
+    background: radial-gradient(white,#f1f6fe);
+    /*Centrer Horizontalement et verticalement*/
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 6px 4px 16px rgb(237,28,36) ;
+
+
+}
+
+.contener label{
+    color: #9f1225;
+    font-style: normal;
+    font-size: 80%;
+    font-family: 'Trebuchet MS';
+    
+}
+
+.c1{
+    border: none;
+    width: 50%;
+    height: 85%;
+    margin-left: 2%;
+}
+
+.c2{
+    border: none;
+    width: 50%;
+    height: 85%;
+    margin-right: 2%;
+    margin-left:90%;
+    margin-left: 50%;
+    margin-top: -580px;
+}
+
+
+.divchampsperso input, select{
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    /*box-shadow: 6px 4px 10px rgb(134, 132, 132) ;*/
+
+}
+
+.divinfosup input ,select{
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    /*box-shadow: 6px 4px 10px rgb(134, 132, 132) ;*/
+
+}
+
+.texarea{
+    width: 95%;
+    height: 25%;
+    border-radius: 0.5rem;
+    border-bottom: thin solid #e8b3b3;
+    border-left-style: none; 
+    border-right-style: none;
+    border-top-style: none;
+    box-shadow: 6px 4px 10px rgb(134, 132, 132) ;
+}
+
+
