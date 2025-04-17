@@ -60,7 +60,7 @@ urlpatterns = [
     path('adcompbien/<int:id>',adcompbien, name='adcompbien'),
     path('adproprio',adproprio, name='adproprio'),
     path('adclient',adclient,name='adclient'),
-    path('/adcontrat',adcontrat, name='adcontrat'),
+    path('adcontrat',adcontrat, name='adcontrat'),
     path('createTest/',createTest,name='createTest') , 
     path('adfactm/<int:idprof>', adfactm , name='adfactm'),
     path('adreglementm/<int:idfac>', adreglementm , name='adreglementm'),
@@ -97,3 +97,5 @@ urlpatterns = [
 #if settings.DEBUG:
     #urlpatterns += static(settings.MEDIA_URL,
     #document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

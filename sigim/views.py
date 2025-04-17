@@ -14,7 +14,7 @@ from django.template.loader import get_template
 import pdfkit
 from num2words import num2words
 from django.views.generic import View
-from xhtml2pdf import pisa
+#from xhtml2pdf import pisa
 
 
 #Espace test

@@ -112,11 +112,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 #DENITION DU CHEMIN D'ACCES AUX FICHIERS STATICS: On cree le dossier des medias dans le projet
 #STATIC_URL = '/static/'
-STATIC_URL = "static/"
-STATICFILES_DIRS=["static"]
-MEDIA_URL="images/"
-MEDIA_ROOT=os.path.join(BASE_DIR,"images/")
+##STATIC_URL = "static/"
+##STATICFILES_DIRS=["static"]
+##MEDIA_URL="images/"
+##MEDIA_ROOT=os.path.join(BASE_DIR,"images/")
 #MEDIA_ROOT=BASE_DIR,'images/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # pour collectstatic (prod)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # pour dev
 
 
 # Default primary key field type
