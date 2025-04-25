@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from .form import composantsForm, biensForm, formtest
 from django.template.loader import get_template
 import pdfkit
+from xhtml2pdf import pisa
 from num2words import num2words
 from django.views.generic import View
 #from xhtml2pdf import pisa
@@ -245,13 +246,13 @@ def adprofmanda(request,id):
         #saveproforma.save()
 
         #ENREGISTREMENT DES DETAILS
-        proforma_id= []
+        proforma_id= 0
         description= [request.POST.get("t_description")]
-        soustotal= []
-        totaltva= []
-        totalttc= []
-        remise= []
-        netapayer= []
+        soustotal= 0
+        totaltva= 0
+        totalttc= 0
+        remise= 0
+        netapayer= 0
         print (description)
     return render (request, 'adprofmanda.html',context)
 
@@ -662,11 +663,11 @@ def adprofm(request, idproprietaire):
         bien_id=request.POST.get("bien")
         usage= request.POST.get("usage")
         personnel_id=request.POST.get("commercial")
-        soustotal= request.POST.get("soustotal")
-        totaltva=request.POST.get("totaltva")
-        totalttc=request.POST.get("totalttc")
-        remise=request.POST.get("remise")
-        netapayer=request.POST.get("netapayer")
+        soustotal= 0
+        totaltva=0
+        totalttc=0
+        remise=0
+        netapayer=0
         typeproforma="mandat" 
         dateedition=request.POST.get("datecreation")
         saveproforma=proforma.objects.create(dateedition=dateedition,usage=usage,proprietaire_id=proprietaire_id,numquitance=numquitance,delaispaiement=delaispaiement,bien_id=bien_id,typeproforma=typeproforma,personnel_id=personnel_id,soustotal=soustotal,totaltva=totaltva,totalttc=totalttc,remise=remise,netapayer=netapayer)

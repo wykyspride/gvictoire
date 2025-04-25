@@ -5,9 +5,9 @@
 <h5 style="margin-left: 2%; color: #ed1c24; font-family:'Trebuchet MS';">Espace proformas Mandat:</h5>              
 
   <!--Bouton creer nouveau-->
-  <div align="right"><a href="adproformamandat /{{leproprio.id}}"  class="btn btn-success" >Nouveau</a>
+  <div align="right">
     <a href="#" class="btn btn-primary" >Imprimer</a><br><br></div>
-
+    
   <table class="table"  >
       <tr style="background-color: #f1f1f1;">
           <th ><B>N°</B></th>
@@ -23,22 +23,21 @@
           <th><B>Actions</B></th>
           <th></th>
           <th></th>
-          <th></th>
       </tr>
   
       {% for proforma in lesproformas %}
        <tr>
               <th scope="row">{{proforma.id}}</th>
               <td >{{proforma.datecreation}}</td>
-              <td >{{proforma.bien}}</td>
-              <td >{{proforma.proprietaire}}</td>
+              <td >{{proforma.bien.nom}}</td>
+              <td >{{proforma.proprietaire.nom}}</td>
               <td >{{proforma.soustotal}}</td>
               <td >{{proforma.totalttc}}</td>
               <td >{{proforma.remise}}</td>
               <td >{{proforma.netapayer}}</td>
               <td>
 
-<!--Boutton voir details-->
+                  <!--Boutton voir details-->
 
               <td >  
                 <a href="modifproprio/{{proforma.id}}" title="Voir details" >
@@ -55,10 +54,17 @@
               <svg id="i-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
               </svg>
-              </a></td>
+              </a>
+             </td>
            
              
-
+              <td >  
+                <a href="detailprofm/{{proforma.id}}" title="Ajouter une ligne au proforma" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                  </svg>
+                </a>
+              </td>
 
             
                 <td  title="Supprimer">
