@@ -868,3 +868,14 @@ def adreglementm(request, idfac):
         lafacture.save()
         return redirect ('espacefacturem')
     return render(request,'adreglementm.html',context)
+
+#RECUPERATION DES COORDONEES GPS
+@csrf_exempt
+def envoyer_coordonnees(request):
+    if request.method == "POST":
+        latitude = request.POST.get("latitude")
+        longitude = request.POST.get("longitude")
+        # Tu peux ici les enregistrer en base ou les afficher
+        print(f"Latitude: {latitude}, Longitude: {longitude}")
+        return HttpResponse("Coordonnées reçues.")
+    return render(request, "envoyer_coordonnees.html")

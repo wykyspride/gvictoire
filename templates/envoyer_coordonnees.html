@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Localisation</title>
+</head>
+<body>
+  <button onclick="getLocation()">Obtenir ma position</button>
+  <form id="locationForm" method="POST" action="">
+    {% csrf_token %}
+    <input type="text" name="latitude" id="latitude">
+    <input type="text" name="longitude" id="longitude">
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          document.getElementById("latitude").value = position.coords.latitude;
+          document.getElementById("longitude").value = position.coords.longitude;
+        });
+      } else {
+        alert("La géolocalisation n'est pas supportée.");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -87,6 +87,9 @@ urlpatterns = [
     path('etatprofm/<int:idprof>', etatprofm, name='etatprofm'),
     path('etatprofm', views.etatprofm, name='etatprofm'),
 
+    #RECUP COORDONNEES GPS
+    path('envoyer_coordonnees', views.envoyer_coordonnees, name='envoyer_coordonnees'),
+
 
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
